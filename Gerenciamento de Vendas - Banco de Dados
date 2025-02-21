@@ -1,0 +1,83 @@
+# Gerenciamento de Vendas - Banco de Dados
+
+Este repositório contém o script SQL para criar e estruturar um banco de dados de **Gerenciamento de Vendas**. O banco de dados é projetado para armazenar informações sobre clientes, produtos, pedidos e itens de pedido.
+
+## 📌 Estrutura do Banco de Dados
+
+O banco de dados contém as seguintes tabelas:
+
+### 1. **Clientes**
+
+Armazena informações sobre os clientes.
+
+```sql
+CREATE TABLE Clientes (
+    ClienteID INT PRIMARY KEY AUTO_INCREMENT,
+    Nome VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) UNIQUE NOT NULL,
+    Telefone VARCHAR(15),
+    Endereco TEXT
+);
+```
+
+### 2. **Produtos**
+
+Armazena os produtos disponíveis para venda.
+
+```sql
+CREATE TABLE Produtos (
+    ProdutoID INT PRIMARY KEY AUTO_INCREMENT,
+    Nome VARCHAR(100) NOT NULL,
+    Preco DECIMAL(10,2) NOT NULL,
+    Estoque INT NOT NULL
+);
+```
+
+### 3. **Pedidos**
+
+Registra os pedidos realizados pelos clientes.
+
+```sql
+CREATE TABLE Pedidos (
+    PedidoID INT PRIMARY KEY AUTO_INCREMENT,
+    ClienteID INT,
+    DataPedido DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Status ENUM('Pendente', 'Pago', 'Cancelado') DEFAULT 'Pendente',
+    FOREIGN KEY (ClienteID) REFERENCES Clientes(ClienteID)
+);
+```
+
+### 4. **ItensPedido**
+
+Relaciona os pedidos aos produtos comprados.
+
+```sql
+CREATE TABLE ItensPedido (
+    ItemID INT PRIMARY KEY AUTO_INCREMENT,
+    PedidoID INT,
+    ProdutoID INT,
+    Quantidade INT NOT NULL,
+    FOREIGN KEY (PedidoID) REFERENCES Pedidos(PedidoID),
+    FOREIGN KEY (ProdutoID) REFERENCES Produtos(ProdutoID)
+);
+```
+
+## 🚀 Como Usar
+
+1. **Crie o banco de dados e utilize-o:**
+   ```sql
+   CREATE DATABASE GerenciamentoVendas;
+   USE GerenciamentoVendas;
+   ```
+2. **Execute o script SQL (gerenciamento_vendas.sql) em um SGBD como MySQL ou MariaDB.**
+
+## 📄 Licença
+
+Este projeto é distribuído sob a licença MIT. Sinta-se à vontade para usá-lo e modificá-lo conforme necessário.
+
+---
+
+📌 **Autor:** [Alvaro Silva]\
+🔗 **GitHub:** [alvaro5801]\
+✉️ **Contato:** [alvaro.rs580\@gmail.com]
+
